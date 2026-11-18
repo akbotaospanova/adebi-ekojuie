@@ -39,8 +39,16 @@ $("#nov").innerHTML=nb[1].map((x,i)=>`<div class="card"><div class="ic">${nIc[i]
 /* sites */
 $("#sites").innerHTML=C.sites.map(s=>s.url?`<a class="site s${s.grade}" href="${esc(s.url)}" target="_blank" rel="noopener"><span class="g">${s.grade}</span><b>${s.grade}-сынып</b><small>${esc(s.note)}</small><span class="go">Сайтқа өту →</span></a>`:`<div class="site s${s.grade} soon"><span class="g">${s.grade}</span><b>${s.grade}-сынып</b><small>${esc(s.note)}</small><span class="go">Сілтеме қосылады</span></div>`).join("");
 
+/* seminar */
+const SM=window.SEMINAR;
+if(SM){$("#semtitle").innerHTML=`${esc(SM.title)}<br><b style="color:var(--blue)">${esc(SM.org)}</b> · ${esc(SM.date)}`;
+ $("#semmeta").innerHTML=`<b>${esc(SM.role)}</b><span>${esc(SM.date)}</span>`;
+ $("#semstats").innerHTML=SM.stats.map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("");
+ $("#quotes").innerHTML=SM.reviews.map(r=>`<blockquote class="qcard"><p>${esc(r.t)}</p><footer><span class="qav">${esc(r.n.charAt(0))}</span><span><b>${esc(r.n)}</b><small>${esc(r.s)}</small></span></footer></blockquote>`).join("");}
+const lb=$("#lightbox");document.querySelectorAll(".zoomable img").forEach(im=>im.addEventListener("click",()=>{lb.querySelector("img").src=im.src;lb.classList.add("open");}));
+lb.addEventListener("click",()=>lb.classList.remove("open"));addEventListener("keydown",e=>{if(e.key==="Escape")lb.classList.remove("open");});
 /* ecosystem */
-$("#eco").innerHTML=(C.extra||[]).map(e=>`<a class="ecard" href="${esc(e.url)}" target="_blank" rel="noopener"><span class="eic">${e.icon}</span><span class="etag">${esc(e.tag)}</span><h3>${esc(e.title)}</h3><p>${esc(e.note)}</p><span class="eurl">${esc(e.url.replace(/^https?:\/\//,"").replace(/\/$/,""))} ↗</span></a>`).join("");
+$("#eco").innerHTML=(C.extra||[]).map(e=>`<a class="ecard" href="${esc(e.url)}" target="_blank" rel="noopener"><span class="eic">${e.icon}</span><span class="etag">${esc(e.tag)}</span><h3>${esc(e.title)}</h3><p>${esc(e.note)}</p><span class="eurl">${esc(e.url.replace(/^https?:\/\//,"").replace(/\/$/,""))} ↗</span></a>`).join("")+(C.classHours?`<div class="ecard ch"><span class="eic">🌟</span><span class="etag">Тәрбие · 5–11-сыныптар</span><h3>Сынып сағаттары және Қауіпсіздік сабақтары 2026–2027</h3><p>Әр сыныпқа жеке сайт, «Адал азамат» құндылықтары, логин арқылы қолжетімділік.</p><div class="chgrid">${C.classHours.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener"><b>${c.grade}</b><span>сынып</span></a>`).join("")}</div></div>`:"");
 /* matrix */
 const mt=P.body.find(b=>b[0]==="table"&&/матрица/.test(b[1].cap))[1];
 $("#mtx").innerHTML=`<tr>${mt.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr>`+mt.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("");
